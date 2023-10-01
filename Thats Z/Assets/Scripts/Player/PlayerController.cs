@@ -8,10 +8,11 @@ public class PlayerController : MonoBehaviour
     
     #region Sprinting
     [Header("Sprint")]
-    //public Slider SprintSlider;
+    public Slider SprintSlider;
     //public Animator PlayerAnimator;
     private float sprintCount=5000f;
     private float sprintMinus = 10f;
+    private float SRS = 0.2f; // Sprint Regeneration Speed -  jak szybko odnawia się sprint
     private float PlayerSprintSpeed=8f;
     private float PlayerWalkingSpeed = 6f;
     private float PlayerCrounchSpeed = 3f;
@@ -34,6 +35,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 prevoiusMousePosition;
     private Vector3 prevoiusPlayerPosition;
     #endregion Move Values
+
+    public Text InterActionTxt;
 
     //[Header("LibraryOfWeapons")]
     //public Sprite xdd;
@@ -71,24 +74,33 @@ public class PlayerController : MonoBehaviour
             if (sprintCount > 0)
             {
                 //PlayerAnimator.SetBool("isSprint", true);
-                //SprintSlider.gameObject.SetActive(true);
-                sprintCount -= sprintMinus;
-                //SprintSlider.value = sprintCount;
+                SprintSlider.gameObject.SetActive(true);
+                sprintCount -= sprintMinus * 1.5f;
+                SprintSlider.value = sprintCount;
                 PlayerSpeed = PlayerSprintSpeed;
             }
             else
             {
                 PlayerSpeed = PlayerWalkingSpeed;
                 //PlayerAnimator.SetBool("isSprint", false);
-                //SprintSlider.gameObject.SetActive(false);
+                SprintSlider.gameObject.SetActive(false);
             }
         }
         else
         {
             //PlayerAnimator.SetBool("isSprint", false);
-            //SprintSlider.gameObject.SetActive(false);
-            sprintCount +=sprintMinus-2;
-            
+            sprintCount += sprintMinus * SRS;
+            SprintSlider.value = sprintCount;
+            if (sprintCount < 5000)
+            {
+                SprintSlider.gameObject.SetActive(true);
+                
+            }
+            else
+            {
+                SprintSlider.gameObject.SetActive(false);
+            }
+
         }
         
         if (Input.GetKey(KeyCode.W))
@@ -187,6 +199,10 @@ public class PlayerController : MonoBehaviour
     }
     #endregion Triggers And Collisions
 
+    public void SetInterActionText(string txt)
+    {
+        InterActionTxt.text = txt;
+    }
     
 
 }
