@@ -28,6 +28,8 @@ public class BasicZombie : MonoBehaviour
 
     void Update()
     {
+        
+        
         if (target != null)
         {
             float distance = Vector3.Distance(transform.position, target.position);
@@ -35,17 +37,21 @@ public class BasicZombie : MonoBehaviour
             if (distance <= attackDistance && !isAttacking)
             {
                 Attack();
+                agent.isStopped = true;
             }
             else if (distance <= chaseDistance)
             {
                 isChasing = true;
                 isAttacking = false;
+                agent.isStopped = false;
                 agent.SetDestination(target.position);
+                
             }
             else if (isChasing)
             {
                 isChasing = false;
                 isAttacking = false;
+                agent.isStopped = false;
                 FindRandomWanderPoint();
             }
         }
@@ -95,6 +101,9 @@ public class BasicZombie : MonoBehaviour
             
             lastAttackTime = Time.time;
             isAttacking = true;
+            
+            
+            
         }
     }
 
