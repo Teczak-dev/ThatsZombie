@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class PlayerHealth : MonoBehaviour
+public class BasicZombieHealth : MonoBehaviour
 {
-
+    
     private int health = 100;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int Damage)
     {
-        health -= damage;
+        health -= Damage;
         if (health <= 0)
         {
             DEATH();
@@ -20,9 +19,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void DEATH()
     {
-        
-        Debug.Log("DEAD");
-        
+        Destroy(this.gameObject);
     }
-    
 }
