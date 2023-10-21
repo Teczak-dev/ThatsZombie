@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,10 @@ public class PlayerShooting : MonoBehaviour
     public float szybkoscStrzelania = 0.5f; // Czas między kolejnymi strzałami
     public Text ammoTxt;
     public Text magTxt;
+    public int maxMagAmmo = 0;
+    public string weaponType = "";
     public GameObject AmmoDBs;
+    
     
 
     private float czasOstatniegoStrzalu = 0f;
@@ -22,8 +26,8 @@ public class PlayerShooting : MonoBehaviour
     private void Start()
     {
         _ammodb = AmmoDBs.GetComponent<AmmoDB>();
-        ammoTxt.text = _ammodb.GetAmmo("pistol").ToString();
-        magTxt.text = magAmmo + "/10";
+        ammoTxt.text = _ammodb.GetAmmo(weaponType).ToString();
+        magTxt.text = magAmmo + "/"+maxMagAmmo;
     }
 
     // Update is called once per frame
@@ -33,7 +37,7 @@ public class PlayerShooting : MonoBehaviour
         {
             
             // Sprawdź, czy możemy strzelać
-            if (Input.GetButtonDown("Fire1") && Time.time > czasOstatniegoStrzalu + szybkoscStrzelania)
+            if (Input.GetButton("Fire1") && Time.time > czasOstatniegoStrzalu + szybkoscStrzelania)
             {
                 if (magAmmo > 0)
                 {
@@ -43,14 +47,19 @@ public class PlayerShooting : MonoBehaviour
                 }
                 else
                 {
-                    if (_ammodb.GetAmmo("pistol") >= 10)
+                    if (_ammodb.GetAmmo(weaponType) >= maxMagAmmo)
                     {
-                        magAmmo = 10;
-                        _ammodb.RemoveAmmo("pistol",10);
+                        magAmmo = maxMagAmmo;
+                        _ammodb.RemoveAmmo(weaponType,maxMagAmmo);
+                    }
+                    else
+                    {
+                        magAmmo = _ammodb.GetAmmo(weaponType);
+                        _ammodb.RemoveAmmo(weaponType,magAmmo);
                     }
                 }
-                ammoTxt.text = _ammodb.GetAmmo("pistol").ToString();
-                magTxt.text = $"{magAmmo.ToString()}/10";
+                ammoTxt.text = _ammodb.GetAmmo(weaponType).ToString();
+                magTxt.text = $"{magAmmo.ToString()}/{maxMagAmmo.ToString()}";
 
             }
             
