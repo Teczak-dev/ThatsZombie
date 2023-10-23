@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,7 +10,7 @@ public class DragableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 {
     public Image Img;
     [HideInInspector]public Transform parentAfterDrag;
-    
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("Start Drag");
@@ -31,4 +32,5 @@ public class DragableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         transform.SetParent(parentAfterDrag);
         Img.raycastTarget = true;
     }
+    
 }

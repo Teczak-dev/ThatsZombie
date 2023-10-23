@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
     {
 
         #region KeyBind
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            gameObject.GetComponent<PlayerUIManager>().ChangeInventoryView();
+        }
         if (Input.GetKey(KeyCode.LeftControl))
         {
             GetComponentInParent<Transform>().localScale = new Vector3(1f, 0.5f ,1f);
