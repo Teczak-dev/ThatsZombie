@@ -6,46 +6,57 @@ using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
-    public int maksymalnaIloscPrzedmiotow = 10;
-    public int iloscWolnegoMiejsca = 10;
-    private List<Item> przedmioty = new List<Item>();
-    public List<Image> sloty = new List<Image>();
+    public ScrollRect scrollView;
+    public GameObject itemPrefab;
 
-    public bool DodajPrzedmiot(Item item)
+    private int maxInventorySize = 10;
+    private int currentInventorySize = 5;
+
+    private void Start()
     {
-        if (przedmioty.Count < maksymalnaIloscPrzedmiotow && iloscWolnegoMiejsca<=10)
+        InitializeInventory();
+    }
+
+    private void InitializeInventory()
+    {
+        foreach (Transform child in scrollView.content.transform)
         {
-            przedmioty.Add(item);
-            sloty[przedmioty.Count - 1].sprite = przedmioty[przedmioty.Count - 1].icon;
-            Debug.Log("Dodano " + item.name + " do ekwipunku.");
-            return true;
+            Destroy(child.gameObject);
         }
-        else
+
+        for (int i = 0; i < currentInventorySize; i++)
         {
-            Debug.Log("Ekwipunek jest pełny.");
-            return false;
+            GameObject item = Instantiate(itemPrefab, scrollView.content);
+            Button itemButton = item.GetComponentInChildren<Button>();
+            
+            // Przypisz ID elementu jako nazwę przycisku
+            itemButton.name = i.ToString();
+
+            // Dodaj obsługę kliknięcia przycisku z przekazaniem ID
+            itemButton.onClick.AddListener(() => OnItemClick(int.Parse(itemButton.name)));
         }
     }
 
-    public void UsunPrzedmiot(Item item)
+    public void UpgradeInventory()
     {
-        if (przedmioty.Contains(item))
+        if (currentInventorySize < maxInventorySize)
         {
-            przedmioty.Remove(item);
-            Debug.Log("Usunięto " + item.name + " z ekwipunku.");
-        }
-        else
-        {
-            Debug.Log(item.name + " nie znajduje się w ekwipunku.");
+            currentInventorySize++;
+            GameObject item = Instantiate(itemPrefab, scrollView.content);
+            Button itemButton = item.GetComponentInChildren<Button>();
+            
+            // Przypisz ID elementu jako nazwę przycisku
+            itemButton.name = (currentInventorySize - 1).ToString();
+            
+            // Dodaj obsługę kliknięcia przycisku z przekazaniem ID
+            itemButton.onClick.AddListener(() => OnItemClick(int.Parse(itemButton.name)));
         }
     }
 
-    public void WyswietlEkwipunek()
+    // Obsługa kliknięcia przycisku z przekazaniem ID
+    private void OnItemClick(int itemID)
     {
-        Debug.Log("Zawartość ekwipunku:");
-        foreach (Item item in przedmioty)
-        {
-            Debug.Log("- " + item.name);
-        }
+        Debug.Log($"Selected Item ID:  {itemID}");
+        // Tutaj możesz wykonać dodatkowe akcje na podstawie wybranego ID
     }
 }

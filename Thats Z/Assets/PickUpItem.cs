@@ -17,18 +17,18 @@ public class PickUpItem : MonoBehaviour
         if (isInRange)
         {
             
-            Player.GetComponent<PlayerController>().SetInterActionText($"Press E to PickUp {item.name}");
-            if (Input.GetKey(KeyCode.E))
-            {
-                if (ISys.DodajPrzedmiot(item))
-                {
-                    Destroy(gameObject);
-                }
-                else
-                {
-                    Debug.Log("Błąd lub brak miejsca w EQ");
-                }
-            }
+            //Player.GetComponent<PlayerController>().SetInterActionText($"Press E to PickUp {item.name}");
+            // if (Input.GetKey(KeyCode.E))
+            // {
+            //     if (ISys.DodajPrzedmiot(item))
+            //     {
+            //         Destroy(gameObject);
+            //     }
+            //     else
+            //     {
+            //         Debug.Log("Błąd lub brak miejsca w EQ");
+            //     }
+            // }
         }
         else
         {
