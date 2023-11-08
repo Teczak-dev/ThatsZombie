@@ -7,9 +7,11 @@ public class PlayerUIManager : MonoBehaviour
 {
 
     public GameObject UIPanel;
+    
     [Header("Inventory")] 
     public GameObject InvPanel;
-    
+
+    public InventorySystem Isys;
     
     private bool isInv = false;
 
@@ -22,6 +24,7 @@ public class PlayerUIManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0f;
+            Isys.ChangeEQM();
             isInv = true;
         }
         else
