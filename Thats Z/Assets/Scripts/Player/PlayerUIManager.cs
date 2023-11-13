@@ -17,6 +17,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void ChangeInventoryView()
     {
+        Isys.changePanel("Main");
         if (!isInv)
         {
             UIPanel.SetActive(false);

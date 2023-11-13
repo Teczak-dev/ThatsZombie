@@ -1,37 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
-    public ScrollRect scrollView;
+    public ScrollRect scrollViewBP;
+    public ScrollRect scrollViewWeapon;
     public GameObject itemPrefab;
+
+    [Header("Panels")]
+    public GameObject BackPackPanel;
+    public GameObject WeaponPanel;
+    public GameObject EQPanel;
 
     [Header("UI_Description")] 
     public Text nazwa;
     public Text opis;
+    public Text nazwaW;
+    public Text opisW;
 
     public Item pustySlot;
     private int InventorySize = 5;
     private int pusteSloty = 5;
     private List<Item> Ekwipunek;
+    
 
     private bool isFirstEQMenOpen = false;
-
-    public void ChangeEQM()
-    {
-        if (isFirstEQMenOpen)
-        {
-            isFirstEQMenOpen=false;
-        }
-        else
-        {
-            isFirstEQMenOpen = true;
-        }
-    }
+    private bool isWeap = false;
+    private bool isInv = true;
+    
 
     private void Start()
     {
@@ -53,19 +54,70 @@ public class InventorySystem : MonoBehaviour
             InitializeInventory();
             ChangeEQM();
         }
+
+        if (isWeap)
+        {
+            isWeap = false;
+            WeaponSelectMenu(1);
+        }
     }
+    
+    public void ChangeEQM()
+    {
+        if (isFirstEQMenOpen)
+        {
+            isFirstEQMenOpen=false;
+        }
+        else
+        {
+            isFirstEQMenOpen = true;
+        }
+    }
+
+    public void changePanel(string Menu)
+    {
+        if (isInv)
+        {
+            if (Menu == "BP")
+            {
+                BackPackPanel.SetActive(true);
+            }
+            else if (Menu == "W")
+            {
+                WeaponPanel.SetActive(true);
+                isWeap = true;
+            }
+
+            EQPanel.SetActive(false);
+            isInv = false;
+            if (Menu == "Main")
+            {
+                EQPanel.SetActive(true);
+                isInv = true;
+            }
+        }
+        else
+        {
+            BackPackPanel.SetActive(false);
+            WeaponPanel.SetActive(false);
+            EQPanel.SetActive(true);
+            isInv = true;
+            isWeap = false;
+        }
+    }
+    
 
     // ReSharper disable Unity.PerformanceAnalysis
     private void InitializeInventory()
     {
-        foreach (Transform child in scrollView.content.transform)
+        foreach (Transform child in scrollViewBP.content.transform)
         {
             Destroy(child.gameObject);
         }
 
         for (int i = 0; i < InventorySize; i++)
         {
-            GameObject item = Instantiate(itemPrefab, scrollView.content);
+            GameObject item = Instantiate(itemPrefab, scrollViewBP.content);
             Button itemButton = item.GetComponentInChildren<Button>();
             
             // Przypisz ID elementu jako nazwę przycisku
@@ -95,7 +147,7 @@ public class InventorySystem : MonoBehaviour
         for(int i = 0; i<howMuchUpgrade; i++)
         {
             InventorySize++;
-            GameObject item = Instantiate(itemPrefab, scrollView.content);
+            GameObject item = Instantiate(itemPrefab, scrollViewBP.content);
             Button itemButton = item.GetComponentInChildren<Button>();
             
             // Przypisz ID elementu jako nazwę przycisku
@@ -143,5 +195,53 @@ public class InventorySystem : MonoBehaviour
             return false;
         }
     }
+
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    public void WeaponSelectMenu(int index)
+    {
+        if (index == 1 || index == 2 )
+        {
+            
+            foreach (Transform child in scrollViewWeapon.content.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            
+            for (int i = 0; i < Ekwipunek.Count; i++)
+            {
+                if (Ekwipunek[i] is Firearm)
+                {
+                    GameObject item = Instantiate(itemPrefab, scrollViewWeapon.content);
+                    Button itemButton = item.GetComponentInChildren<Button>();
+                    itemButton.name = i.ToString();
+
+                    Text buttonText = itemButton.GetComponentInChildren<Text>();
+                    buttonText.text = Ekwipunek[i].name;
+
+                    itemButton.onClick.AddListener(() => OnWeaponClick(int.Parse(itemButton.name)));
+                }
+            }
+            
+            
+        }
+        
+        
+        
+    }
+    
+    public void OnWeaponClick(int index)
+    {
+        for (int i = 0; i < Ekwipunek.Count; i++)
+        {
+            if ( i == index )
+            {
+                nazwaW.text = Ekwipunek[i].name;
+                opisW.text = Ekwipunek[i].description;
+                break;
+            }
+        }
+    }
+    
     
 }
