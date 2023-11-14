@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class InventorySystem : MonoBehaviour
     public ScrollRect scrollViewBP;
     public ScrollRect scrollViewWeapon;
     public GameObject itemPrefab;
+    public Button RemoveBtn;
 
     [Header("Panels")]
     public GameObject BackPackPanel;
@@ -31,7 +33,12 @@ public class InventorySystem : MonoBehaviour
 
     private bool isFirstEQMenOpen = false;
     private bool isWeap = false;
+    private bool isWeap2 = false;
+    private bool isWeapShort = false;
     private bool isInv = true;
+
+
+    private int idSelect = -1;
     
 
     private void Start()
@@ -60,6 +67,17 @@ public class InventorySystem : MonoBehaviour
             isWeap = false;
             WeaponSelectMenu(1);
         }
+        
+        if (isWeap2)
+        {
+            isWeap2 = false;
+            WeaponSelectMenu(2);
+        }
+        if (isWeapShort)
+        {
+            isWeapShort = false;
+            WeaponSelectMenu(3);
+        }
     }
     
     public void ChangeEQM()
@@ -75,17 +93,32 @@ public class InventorySystem : MonoBehaviour
     }
 
     public void changePanel(string Menu)
-    {
+    {   
+        nazwaW.text = "";
+        opisW.text = "";
+        nazwa.text = "";
+        opis.text = "";
         if (isInv)
         {
             if (Menu == "BP")
             {
                 BackPackPanel.SetActive(true);
+                isFirstEQMenOpen = true;
             }
-            else if (Menu == "W")
+            else if (Menu == "W1")
             {
                 WeaponPanel.SetActive(true);
                 isWeap = true;
+            }
+            else if (Menu == "W2")
+            {
+                WeaponPanel.SetActive(true);
+                isWeap2 = true;
+            }
+            else if (Menu == "W3")
+            {
+                WeaponPanel.SetActive(true);
+                isWeapShort = true;
             }
 
             EQPanel.SetActive(false);
@@ -103,6 +136,8 @@ public class InventorySystem : MonoBehaviour
             EQPanel.SetActive(true);
             isInv = true;
             isWeap = false;
+            isWeap2 = false;
+            isWeapShort = false;
         }
     }
     
@@ -166,6 +201,7 @@ public class InventorySystem : MonoBehaviour
         {
             if ( i == itemID )
             {
+                idSelect = itemID;
                 nazwa.text = Ekwipunek[i].name;
                 opis.text = Ekwipunek[i].description;
                 break;
@@ -196,6 +232,32 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    public void RemoveFromInv()
+    {
+        if (idSelect >= 0 && idSelect < Ekwipunek.Count)
+        {
+            if (Ekwipunek[idSelect] != pustySlot)
+            {
+                Ekwipunek[idSelect] = pustySlot;
+                changePanel("Main");
+                idSelect = -1;
+                
+
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ReSharper disable Unity.PerformanceAnalysis
     public void WeaponSelectMenu(int index)
@@ -210,23 +272,49 @@ public class InventorySystem : MonoBehaviour
             
             for (int i = 0; i < Ekwipunek.Count; i++)
             {
-                if (Ekwipunek[i] is Firearm)
+                if (Ekwipunek[i] is Firearm && !((Firearm)Ekwipunek[i]).isShort)
                 {
-                    GameObject item = Instantiate(itemPrefab, scrollViewWeapon.content);
-                    Button itemButton = item.GetComponentInChildren<Button>();
-                    itemButton.name = i.ToString();
+                        GameObject item = Instantiate(itemPrefab, scrollViewWeapon.content);
+                        
+                        Button itemButton = item.GetComponentInChildren<Button>();
+                        itemButton.name = i.ToString();
 
-                    Text buttonText = itemButton.GetComponentInChildren<Text>();
-                    buttonText.text = Ekwipunek[i].name;
+                        Text buttonText = itemButton.GetComponentInChildren<Text>();
+                        buttonText.text = Ekwipunek[i].name;
 
-                    itemButton.onClick.AddListener(() => OnWeaponClick(int.Parse(itemButton.name)));
+                        itemButton.onClick.AddListener(() => OnWeaponClick(int.Parse(itemButton.name)));
+                    
+                }
+            }
+        }
+        
+        else if (index == 3)
+        {
+            
+            foreach (Transform child in scrollViewWeapon.content.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            
+            for (int i = 0; i < Ekwipunek.Count; i++)
+            {
+                if (Ekwipunek[i] is Firearm && ((Firearm)Ekwipunek[i]).isShort)
+                {
+                        GameObject item = Instantiate(itemPrefab, scrollViewWeapon.content);
+                    
+                        Button itemButton = item.GetComponentInChildren<Button>();
+                        itemButton.name = i.ToString();
+
+                        Text buttonText = itemButton.GetComponentInChildren<Text>();
+                        buttonText.text = Ekwipunek[i].name;
+
+                        itemButton.onClick.AddListener(() => OnWeaponClick(int.Parse(itemButton.name)));
+                    
                 }
             }
             
             
         }
-        
-        
         
     }
     
@@ -242,6 +330,7 @@ public class InventorySystem : MonoBehaviour
             }
         }
     }
+    
     
     
 }
