@@ -12,7 +12,7 @@ public class DoorSys : MonoBehaviour
     public string InterActionText = "Press E to open door";
     public GameObject Player;
     private bool isOpen;
-    private bool isInRange;
+    private bool isInRange = false;
     
     // Start is called before the first frame update
     void Start()
@@ -38,13 +38,9 @@ public class DoorSys : MonoBehaviour
                     DoorAnim.Play("CloseDoor");
                     isOpen = false;
                 }
-                
+                Player.GetComponent<PlayerController>().SetInterActionText(" ");
             }
             
-        }
-        else
-        {
-            Player.GetComponent<PlayerController>().SetInterActionText(" ");
         }
     }
 
@@ -61,6 +57,7 @@ public class DoorSys : MonoBehaviour
         if (other.gameObject.tag == Player.tag)
         {
             isInRange = false;
+            Player.GetComponent<PlayerController>().SetInterActionText(" ");
         }
     }
 }

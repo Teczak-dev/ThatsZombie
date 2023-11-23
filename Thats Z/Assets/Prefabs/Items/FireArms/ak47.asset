@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: colm1911
+  m_Name: ak47
   m_EditorClassIdentifier: Assembly-CSharp::Firearm
-  name: colm1911
-  description: JEB
+  name: ak47
+  description: Fuck YOU!
   icon: {fileID: 0}
   itemID: 0
   price: 0
-  damage: 12
-  fireRate: 0.5
-  isShort: 1
-  weaponType: Pistol
-  MagSize: 7
+  damage: 10
+  fireRate: 0.1
+  isShort: 0
+  weaponType: Rifle
+  MagSize: 30

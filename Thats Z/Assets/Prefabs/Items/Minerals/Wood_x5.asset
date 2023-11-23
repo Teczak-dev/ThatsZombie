@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: colm1911
-  m_EditorClassIdentifier: Assembly-CSharp::Firearm
-  name: colm1911
-  description: JEB
+  m_Name: Wood_x5
+  m_EditorClassIdentifier: Assembly-CSharp::Mineral
+  name: Wood x5
+  description: It's just a wood
   icon: {fileID: 0}
   itemID: 0
   price: 0
-  damage: 12
-  fireRate: 0.5
-  isShort: 1
-  weaponType: Pistol
-  MagSize: 7
+  rarity: 1
+  num: 5

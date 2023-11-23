@@ -10,15 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: AK
-  m_EditorClassIdentifier: Assembly-CSharp::Firearm
-  name: AK47
-  description: SOVIET Rifle. Your Best Friend
+  m_Name: Bread
+  m_EditorClassIdentifier: Assembly-CSharp::Food
+  name: Bread
+  description: JUST FOOD
   icon: {fileID: 0}
-  itemID: 2
+  itemID: 0
   price: 0
-  damage: 12
-  fireRate: 0.3
-  isShort: 0
-  weaponType: Rifle
-  MagSize: 30
+  Hungry: 1000

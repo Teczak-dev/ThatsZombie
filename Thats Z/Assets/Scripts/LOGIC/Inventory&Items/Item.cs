@@ -31,13 +31,14 @@ public class Firearm : Item
 public class Ammo : Item
 {
     public Firearm compatibleFirearm;
+    public GameObject Prefab;
 }
 
 [CreateAssetMenu(fileName = "New White Weapon", menuName = "Items/White Weapons")]
 public class WhiteWeapon : Item
 {
     public int damage;
-    public int convenience;//Poręczność
+    public float convenience;//Poręczność
     public int durability;//Wytrzymałość
 }
 
@@ -45,13 +46,19 @@ public class WhiteWeapon : Item
 public class Food : Item
 {
     public int Hungry;
-    public int Water;
 }
 
 [CreateAssetMenu(fileName = "New First Aid Kit", menuName = "Items/First Aid Kit")]
 public class FirstAidKit : Item
 {
     public int Health;
+}
+
+[CreateAssetMenu(fileName = "New Mineral", menuName = "Items/Mineral")]
+public class Mineral : Item
+{
+    public int rarity;
+    public int num;
 }
 
 

@@ -10,15 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: colm1911
-  m_EditorClassIdentifier: Assembly-CSharp::Firearm
-  name: colm1911
-  description: JEB
+  m_Name: Bandage
+  m_EditorClassIdentifier: Assembly-CSharp::FirstAidKit
+  name: Bandage
+  description: Health +15
   icon: {fileID: 0}
   itemID: 0
   price: 0
-  damage: 12
-  fireRate: 0.5
-  isShort: 1
-  weaponType: Pistol
-  MagSize: 7
+  Health: 15

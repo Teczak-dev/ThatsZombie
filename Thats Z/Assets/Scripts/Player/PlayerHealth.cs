@@ -7,11 +7,15 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
 
-    private int health = 100;
+    public int health = 100;
+    public int maxhealth = 100;
+    public Slider HPSLIDER;
+    public PlayerUIManager pUIm;
 
     public void TakeDamage(int damage)
     {
         health -= damage;
+        HPSLIDER.value = health;
         if (health <= 0)
         {
             DEATH();
@@ -21,8 +25,19 @@ public class PlayerHealth : MonoBehaviour
     private void DEATH()
     {
         
-        Debug.Log("DEAD");
+        pUIm.Death();
         
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void AddHealth(int amount)
+    {
+        health += amount;
+        HPSLIDER.value = health;
     }
     
 }

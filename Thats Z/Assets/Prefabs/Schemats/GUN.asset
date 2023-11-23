@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6156bb9363477e4ea9cba7e41bee1ac, type: 3}
+  m_Name: GUN
+  m_EditorClassIdentifier: 
+  name: GUN Test
+  description: its Just a test
+  ItemCrafted: {fileID: 11400000, guid: 95701984674c0ca4083cc754ff9e89d0, type: 2}
+  NeedMinerals:
+  - Wood x5
+  numofNeedMinerals: 05000000

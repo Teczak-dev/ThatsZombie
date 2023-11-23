@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    
+
+    public HungrySys hs;
     #region Sprinting
     [Header("Sprint")]
     public Slider SprintSlider;
@@ -18,7 +19,9 @@ public class PlayerController : MonoBehaviour
     private float PlayerCrounchSpeed = 3f;
     public bool isSprinting = false;
     private bool canSprint = true;
-    #endregion Sprinting 
+    #endregion Sprinting
+
+    public bool isPause;
 
     #region Move Values
     [Header("Other")]
@@ -99,7 +102,7 @@ public class PlayerController : MonoBehaviour
             if (sprintCount < 5000)
             {
                 SprintSlider.gameObject.SetActive(true);
-                
+                hs.RemoveHungry(1);
             }
             else
             {
@@ -204,8 +207,10 @@ public class PlayerController : MonoBehaviour
     }
     #endregion Triggers And Collisions
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void SetInterActionText(string txt)
     {
+        Debug.Log(txt);
         InterActionTxt.text = txt;
     }
     

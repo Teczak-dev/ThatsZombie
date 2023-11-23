@@ -7,7 +7,7 @@ public class PickUpItem : MonoBehaviour
 {
     public Item item;
     public InventorySystem ISys;
-    public GameObject Player;
+    public PlayerController PlayerController;
     private bool isInRange = false;
     
 
@@ -17,23 +17,21 @@ public class PickUpItem : MonoBehaviour
         if (isInRange)
         {
             
-            Player.GetComponent<PlayerController>().SetInterActionText($"Press E to PickUp {item.name}");
+            PlayerController.SetInterActionText("Press E to PickUp "+item.name);
              if (Input.GetKey(KeyCode.E))
              {
                  if (ISys.AddToInv(item))
                  {
                      Destroy(gameObject);
+                     PlayerController.SetInterActionText("");
                 }
-            else
+                else
                 {
                     Debug.Log("Błąd lub brak miejsca w EQ");
                 }
             }
         }
-        else
-        {
-            Player.GetComponent<PlayerController>().SetInterActionText("");
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,7 +48,7 @@ public class PickUpItem : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             isInRange = false;
-
+            PlayerController.SetInterActionText("");
         }
     }
 }

@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerShooting : MonoBehaviour
 {
+    public GameObject Camera;
     public Transform firePoint; // Transformacja punktu wystrzału broni
     public GameObject pociskPrefab; // Prefabrykat pocisku
     public float silaPocisku = 10f; // Siła strzału broni
@@ -16,6 +18,7 @@ public class PlayerShooting : MonoBehaviour
     public int maxMagAmmo = 0;
     public string weaponType = "";
     public GameObject AmmoDBs;
+    public string Wname;
     
     
 
@@ -23,8 +26,12 @@ public class PlayerShooting : MonoBehaviour
     private int magAmmo = 0;
     private AmmoDB _ammodb;
 
-    private void Start()
+    public void changeWeapon(string wT, int mA,int D, float sS )
     {
+        weaponType = wT;
+        maxMagAmmo = mA;
+        szybkoscStrzelania = sS;
+        silaPocisku = D;
         _ammodb = AmmoDBs.GetComponent<AmmoDB>();
         ammoTxt.text = _ammodb.GetAmmo(weaponType).ToString();
         magTxt.text = magAmmo + "/"+maxMagAmmo;
@@ -35,7 +42,6 @@ public class PlayerShooting : MonoBehaviour
     {
         if (gameObject.activeInHierarchy)
         {
-            
             // Sprawdź, czy możemy strzelać
             if (Input.GetButton("Fire1") && Time.time > czasOstatniegoStrzalu + szybkoscStrzelania)
             {
@@ -47,20 +53,18 @@ public class PlayerShooting : MonoBehaviour
                 }
                 else
                 {
-                    if (_ammodb.GetAmmo(weaponType) >= maxMagAmmo)
-                    {
-                        magAmmo = maxMagAmmo;
-                        _ammodb.RemoveAmmo(weaponType,maxMagAmmo);
-                    }
-                    else
-                    {
-                        magAmmo = _ammodb.GetAmmo(weaponType);
-                        _ammodb.RemoveAmmo(weaponType,magAmmo);
-                    }
+                    Reload();
                 }
                 ammoTxt.text = _ammodb.GetAmmo(weaponType).ToString();
                 magTxt.text = $"{magAmmo.ToString()}/{maxMagAmmo.ToString()}";
 
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reload();
+                ammoTxt.text = _ammodb.GetAmmo(weaponType).ToString();
+                magTxt.text = $"{magAmmo.ToString()}/{maxMagAmmo.ToString()}";
             }
             
         }
@@ -84,5 +88,19 @@ public class PlayerShooting : MonoBehaviour
 
         // Zniszcz pocisk po pewnym czasie (na przykład 2 sekundy)
         Destroy(pocisk, 2f);
+    }
+
+    private void Reload()
+    {
+        if (_ammodb.GetAmmo(weaponType) >= maxMagAmmo)
+        {
+            magAmmo = maxMagAmmo;
+            _ammodb.RemoveAmmo(weaponType,maxMagAmmo);
+        }
+        else
+        {
+            magAmmo = _ammodb.GetAmmo(weaponType);
+            _ammodb.RemoveAmmo(weaponType,magAmmo);
+        }
     }
 }
