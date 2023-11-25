@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: colm1911
   m_EditorClassIdentifier: Assembly-CSharp::Firearm
   name: colm1911
-  description: JEB
+  description: The classic Colt M1911 pistol is a timeless firearm celebrated for
+    its reliability and precision. Ideal for short-range combat, this .45 caliber
+    pistol offers concentrated firepower, making it an excellent defense against
+    approaching zombies.
   icon: {fileID: 0}
   itemID: 0
   price: 0

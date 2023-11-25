@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: luk
+  m_EditorClassIdentifier: Assembly-CSharp::Firearm
+  name: Bow
+  description: The bow, a silent yet effective weapon, is perfect for eliminating
+    zombies from a distance. With a durable string and precise sight, the bow allows
+    players to attack from afar, minimizing the risk of detection by the undead.
+    Ideal for those who prefer stealth and eliminating enemies from a distance.
+  icon: {fileID: 0}
+  itemID: 0
+  price: 0
+  damage: 50
+  fireRate: 2
+  isShort: 0
+  weaponType: Bow
+  MagSize: 1

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Wood_x5
+  m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::Mineral
-  name: Wood x5
+  name: Wood
   description: It's just a wood
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4143aac8d798ea24c844cab042e7e0c2, type: 3}
   itemID: 0
   price: 0
   rarity: 1
-  num: 5
+  num: 10

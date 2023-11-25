@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = System.Random;
 
 public class InventorySystem : MonoBehaviour
 {
+    [Header("Scroll Rects")]
     public ScrollRect scrollViewBP;
     public ScrollRect scrollViewWeapon;
+    public ScrollRect scrollViewMat;
+    [Header("Oth")] 
     public GameObject itemPrefab;
+    public GameObject othPrefab;
+    public PlayerUIManager pUIm;
     public Equipment Eqp;
     public AmmoDB Ammodb;
     public HungrySys hs;
@@ -21,6 +27,7 @@ public class InventorySystem : MonoBehaviour
 
     [Header("Panels")]
     public GameObject BackPackPanel;
+    public GameObject BackPackMatPanel;
     public GameObject WeaponPanel;
     public GameObject EQPanel;
 
@@ -35,8 +42,11 @@ public class InventorySystem : MonoBehaviour
 
     public Item pustySlot;
     private int InventorySize = 5;
-    private int pusteSloty = 5;
+    public int pusteSloty = 5;
     public List<Item> Ekwipunek;
+    private List<Item> Minerals;
+    private List<int> MineralsNum;
+    private List<Item> Ammo;
     
 
     private bool isFirstEQMenOpen = false;
@@ -52,6 +62,9 @@ public class InventorySystem : MonoBehaviour
     private void Start()
     {
         Ekwipunek = new List<Item>();
+        Minerals = new List<Item>();
+        MineralsNum = new List<int>();
+        Ammo = new List<Item>();
         for (int i = 0; i < InventorySize; i++)
         {
             Ekwipunek.Add(pustySlot);
@@ -101,7 +114,11 @@ public class InventorySystem : MonoBehaviour
     }
 
     public void changePanel(string Menu)
-    {   
+    {
+        for (int i = 0; i < Minerals.Count; i++)
+        {
+            Debug.Log( Minerals[i].name +", "+ MineralsNum[i] );
+        }
         nazwaW.text = "";
         opisW.text = "";
         nazwa.text = "";
@@ -133,6 +150,8 @@ public class InventorySystem : MonoBehaviour
             isInv = false;
             if (Menu == "Main")
             {
+
+                BackPackMatPanel.SetActive(false);
                 EQPanel.SetActive(true);
                 isInv = true;
             }
@@ -175,7 +194,7 @@ public class InventorySystem : MonoBehaviour
             }
             else
             {
-                buttonText.text = "Puste";
+                buttonText.text = "Empty Slot";
             }
             
             // Dodaj obsługę kliknięcia przycisku z przekazaniem ID
@@ -230,55 +249,122 @@ public class InventorySystem : MonoBehaviour
     {
         if (pusteSloty > 0)
         {
-            foreach (var VARIABLE in Ekwipunek)
-            {
-                if (VARIABLE == pustySlot)
+                foreach (var VARIABLE in Ekwipunek)
                 {
-                    if (item is Firearm)
+                    if (VARIABLE == pustySlot)
                     {
-                        bool canAdd = true;
-                        int I = 0;
-                        for (int i = 0; i < Ekwipunek.Count; i++)
+                        if (item is Firearm)
                         {
-                            if (Ekwipunek[i] is Firearm && Ekwipunek[i] == item)
+                            bool canAdd = true;
+                            int I = 0;
+                            for (int i = 0; i < Ekwipunek.Count; i++)
                             {
-                                canAdd = false;
-                                I = i;
+                                if (Ekwipunek[i] is Firearm && Ekwipunek[i] == item)
+                                {
+                                    canAdd = false;
+                                    I = i;
+                                    break;
+                                }
+                            }
+
+                            if (!canAdd)
+                            {
+                                Random r = new Random();
+                                Ammodb.addAmmo(((Firearm)Ekwipunek[I]).weaponType,
+                                    r.Next(0, ((Firearm)Ekwipunek[I]).MagSize));
+                                pUIm.CreateItem(item.name, "P");
+
+                            }
+                            else
+                            {
+                                Ekwipunek[Ekwipunek.IndexOf(VARIABLE)] = item;
+                                pUIm.CreateItem(item.name, "P");
+
+                                pusteSloty--;
                                 break;
                             }
-                        }
 
-                        if (!canAdd)
-                        {
-                            Random r = new Random();
-                            Ammodb.addAmmo( ((Firearm)Ekwipunek[I]).weaponType, r.Next(0,((Firearm)Ekwipunek[I]).MagSize ) );
                         }
                         else
                         {
+
+                            
+                            if(item is Mineral) break;
+
                             Ekwipunek[Ekwipunek.IndexOf(VARIABLE)] = item;
+                            pUIm.CreateItem(item.name, "P");
 
                             pusteSloty--;
                             break;
                         }
                     }
-                    else
+                }
+
+            if(item is Mineral)
+            {
+                bool isFoundM = false;
+                int indexM = -1;
+                for (int i = 0; i < Minerals.Count; i++)
+                {
+                    if (Minerals[i] == item)
                     {
-
-
-                        Ekwipunek[Ekwipunek.IndexOf(VARIABLE)] = item;
-
-                        pusteSloty--;
+                        isFoundM = true;
+                        indexM = i;
                         break;
                     }
                 }
+
+                if (isFoundM)
+                {
+                    MineralsNum[indexM] += ((Mineral)item).num;
+                    pUIm.CreateItem(item.name, "P");
+
+                }
+                else
+                {
+                    Minerals.Add(item);
+                    MineralsNum.Add(((Mineral)item).num);
+                    pUIm.CreateItem(item.name, "P");
+
+                }
+
+                return true;
+            }
+            return true;
+        }
+        if (item is Mineral)
+        {
+            bool isFoundM = false;
+            int indexM = -1;
+            for (int i = 0; i < Minerals.Count; i++)
+            {
+                if (Minerals[i] == item)
+                {
+                    isFoundM = true;
+                    indexM = i;
+                    break;
+                }
+            }
+
+            if (isFoundM)
+            {
+                MineralsNum[indexM] += ((Mineral)item).num;
+                pUIm.CreateItem(item.name, "P");
+
+            }
+            else
+            {
+                Minerals.Add(item);
+                MineralsNum.Add(((Mineral)item).num);
+                pUIm.CreateItem(item.name, "P");
+
             }
 
             return true;
         }
-        else
-        {
-            return false;
-        }
+        
+        pUIm.EQFULL();
+        return false;
     }
 
     public void RemoveFromInv()
@@ -300,17 +386,8 @@ public class InventorySystem : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
+    
+    
     
     // ReSharper disable Unity.PerformanceAnalysis
     public void WeaponSelectMenu(int index)
@@ -323,7 +400,6 @@ public class InventorySystem : MonoBehaviour
                 Destroy(child.gameObject);
             }
 
-            bool isOne = false;
             for (int i = 0; i < Ekwipunek.Count; i++)
             {
                 if (Ekwipunek[i] is Firearm && !((Firearm)Ekwipunek[i]).isShort)
@@ -455,5 +531,72 @@ public class InventorySystem : MonoBehaviour
             }
         }
     }
+    
+    
+    //
+    //  Zdobycie mierals
+    //
+
+    public List<Item> GetMinerals()
+    {
+        return Minerals;
+    }
+
+    public void SetMinerals(List<Item> Mins, List<int> MinNum)
+    {
+        Minerals = Mins;
+        MineralsNum = MinNum;
+    }
+
+    public List<int> getMineralsNum()
+    {
+        return MineralsNum;
+    }
+    
+    //
+    //  Materials UI
+    //
+
+    public void MaterialsView(int open)
+    {
+        if (open==0)
+        {
+            BackPackPanel.SetActive(false);
+            BackPackMatPanel.SetActive(true);
+            MaterialsBP();
+        }
+        else if(open == 1)
+        {
+            BackPackPanel.SetActive(true);
+            BackPackMatPanel.SetActive(false);
+            InitializeInventory();
+        }
+        else if(open == 2)
+        {
+            BackPackMatPanel.SetActive(false);
+            changePanel("Main");
+        }
+    }
+    
+    private void MaterialsBP()
+    {
+        foreach (Transform child in scrollViewMat.content.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < Minerals.Count; i++)
+        {
+            GameObject item = Instantiate(othPrefab, scrollViewMat.content);
+            
+            Text MinTxt = item.GetComponentInChildren<Text>();
+            MinTxt.text = Minerals[i].name + "\n" + MineralsNum[i];
+            MinTxt.GetComponentInChildren<Image>().sprite = Minerals[i].icon;
+
+
+        }
+        
+    }
+    
     
 }

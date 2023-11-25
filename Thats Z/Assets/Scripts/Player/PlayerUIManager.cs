@@ -6,6 +6,12 @@ using UnityEngine.UI;
 public class PlayerUIManager : MonoBehaviour
 {
 
+    [Header("Powiadomienia")] 
+    public GameObject fullInv;
+    public GameObject craftedItem;
+    public Text cITxt;
+    private float time = 1f;
+    [Header("Reszta")]
     public PlayerController pc;
     public GameObject UIPanel;
     
@@ -54,6 +60,37 @@ public class PlayerUIManager : MonoBehaviour
         Time.timeScale = 0f;
         pc.isPause = true;
         
+    }
+    
+    
+    public void EQFULL()
+    {
+        fullInv.SetActive(true);
+        StartCoroutine(UkryjPowiadomienie());
+    }
+
+    // Metoda do wyświetlania powiadomienia o stworzeniu przedmiotu
+    public void CreateItem(string nazwaPrzedmiotu, string type)
+    {
+        
+        craftedItem.SetActive(true);
+        if(type == "C") cITxt.text = "Created " + nazwaPrzedmiotu+"!";
+        else if(type == "P") cITxt.text = "picked up " + nazwaPrzedmiotu+"!";
+        StartCoroutine(UkryjPowiadomienie());
+    }
+
+    // Korutyna do automatycznego ukrywania powiadomienia po pewnym czasie
+    IEnumerator UkryjPowiadomienie()
+    {
+        float startRealTime = Time.realtimeSinceStartup;
+
+        while (Time.realtimeSinceStartup - startRealTime < time || time == 0)
+        {
+            yield return null;
+        }
+
+        fullInv.SetActive(false);
+        craftedItem.SetActive(false);
     }
 
 }

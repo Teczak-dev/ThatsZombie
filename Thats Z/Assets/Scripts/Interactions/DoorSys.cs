@@ -9,7 +9,7 @@ public class DoorSys : MonoBehaviour
     
     public GameObject Door;
     public Animator DoorAnim;
-    public string InterActionText = "Press E to open door";
+    public string InterActionText = "Press E to open/close the door";
     public GameObject Player;
     private bool isOpen;
     private bool isInRange = false;

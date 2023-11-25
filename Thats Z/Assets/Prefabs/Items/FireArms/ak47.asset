@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: ak47
   m_EditorClassIdentifier: Assembly-CSharp::Firearm
   name: ak47
-  description: Fuck YOU!
+  description: The AK-47, a robust Russian assault rifle, renowned for its reliability
+    and firepower, is a go-to choice in the battle against zombie hordes. Its effectiveness
+    makes it indispensable for those defending against the undead onslaught.
   icon: {fileID: 0}
   itemID: 0
   price: 0

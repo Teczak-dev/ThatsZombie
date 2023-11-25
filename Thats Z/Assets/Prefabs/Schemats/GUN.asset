@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6156bb9363477e4ea9cba7e41bee1ac, type: 3}
   m_Name: GUN
   m_EditorClassIdentifier: 
-  name: GUN Test
-  description: its Just a test
-  ItemCrafted: {fileID: 11400000, guid: 95701984674c0ca4083cc754ff9e89d0, type: 2}
+  name: Bow
+  description: 'Craft this amazing bow '
+  ItemCrafted: {fileID: 11400000, guid: fe36ae2d2a5a9064d8599fbafa48ebce, type: 2}
   NeedMinerals:
-  - Wood x5
-  numofNeedMinerals: 05000000
+  - Wood
+  numofNeedMinerals: 1e000000

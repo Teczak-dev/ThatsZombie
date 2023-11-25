@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Bread
   m_EditorClassIdentifier: Assembly-CSharp::Food
   name: Bread
-  description: JUST FOOD
+  description: Simple Food ;)
   icon: {fileID: 0}
   itemID: 0
   price: 0
-  Hungry: 1000
+  Hungry: 2000

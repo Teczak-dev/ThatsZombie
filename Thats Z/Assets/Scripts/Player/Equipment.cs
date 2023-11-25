@@ -37,7 +37,7 @@ public class Equipment : MonoBehaviour
     {
         #region Weap1
         
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha1) && Weapons[0] != pustySlot)
             {
                 if (!isWO1)
                 {
@@ -72,7 +72,7 @@ public class Equipment : MonoBehaviour
 
         #region Weap2
         
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha2) && Weapons[1] != pustySlot)
             {
                 if (!isWO2)
                 {
@@ -108,7 +108,7 @@ public class Equipment : MonoBehaviour
         
         #region Weap3
         
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && Weapons[2] != pustySlot)
         {
             if (!isWO3)
             {
@@ -150,10 +150,14 @@ public class Equipment : MonoBehaviour
         if (WeapInd[Windex] != index)
         {
             
-                Weapons[Windex] = item;
-                WeapInd[Windex] = index;
-                Debug.Log(Windex + ", " + Weapons[Windex]);
             
+            if (Windex == 0 && Weapons[1] == item) RemoveWeapon(WeapInd[1]);
+            else if(Windex == 1 && Weapons[0] == item) RemoveWeapon(WeapInd[0]);
+            Weapons[Windex] = item;
+            WeapInd[Windex] = index;
+            Debug.Log(Windex + ", " + Weapons[Windex]);
+                    
+
         }
 
         else if (Weapons[Windex] != pustySlot && WeapInd[Windex] == index)

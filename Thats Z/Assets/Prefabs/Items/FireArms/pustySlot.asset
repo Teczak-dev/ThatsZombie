@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4662f164c0cade48b61b9a81676bc32, type: 3}
   m_Name: pustySlot
   m_EditorClassIdentifier: 
-  name: Puste
-  description: Pusto Tutaj. To wolne miejsce w ekwipunku :)
+  name: Empty slot
+  description: For you'r items ;)
   icon: {fileID: 0}
   itemID: 0
   price: 0
