@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 
+    public GameObject Body;
+    public GameObject Camera;
     public HungrySys hs;
     #region Sprinting
     [Header("Sprint")]
@@ -29,11 +31,12 @@ public class PlayerController : MonoBehaviour
     public Camera PlayerCamera;
     public float MouseSensitivity = 90f;
     public float PlayerSpeed = 3f;
-    public float jumpForce = 5f;
+    public float jumpForce = 2f;
 
     private bool isJumping = false;
     private bool isWalking = false;
     public bool isHide = false;
+    private bool canCrouch = true;
     private float rotationOnX;
     private Vector3 prevoiusMousePosition;
     private Vector3 prevoiusPlayerPosition;
@@ -63,18 +66,26 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.GetComponent<PlayerUIManager>().ChangeInventoryView();
         }
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            GetComponentInParent<Transform>().localScale = new Vector3(1f, 0.5f ,1f);
-            PlayerSpeed = PlayerCrounchSpeed;
-            canSprint = false;
 
-        }
-        else
+        if (canCrouch)
         {
-            GetComponentInParent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            PlayerSpeed = PlayerWalkingSpeed;
-            canSprint = true;
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+                Camera.transform.position = new Vector3(Camera.transform.position.x, 1.3f, Camera.transform.position.z);
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                Body.transform.localScale = new Vector3(1f, 0.5f, 1f);
+                PlayerSpeed = PlayerCrounchSpeed;
+                canSprint = false;
+
+            }
+            else
+            {
+                Body.transform.localScale = new Vector3(1f, 1f, 1f);
+                PlayerSpeed = PlayerWalkingSpeed;
+                canSprint = true;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+                Camera.transform.position = new Vector3(Camera.transform.position.x, 1.2f, Camera.transform.position.z);
         }
 
         if(Input.GetKey(KeyCode.LeftShift) && isWalking && canSprint)
@@ -131,11 +142,16 @@ public class PlayerController : MonoBehaviour
             playerMoveLeft();
             isWalking = true;
         }
-        if (Input.GetKey(KeyCode.Space) && !isJumping)
-        {
 
-            playerJumped();
-            isJumping = true;
+        if (Body.transform.localScale.y > 0.5f)
+        {
+            if (Input.GetKey(KeyCode.Space) && !isJumping)
+            {
+
+                playerJumped();
+                isJumping = true;
+                canCrouch = false;
+            }
         }
 
         if (Input.mousePosition != prevoiusMousePosition)
@@ -202,6 +218,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isJumping = false;
+            canCrouch = true;
         }
         
     }

@@ -6,10 +6,11 @@ using UnityEngine;
 public class BasicZombieHealth : MonoBehaviour
 {
     
-    private int health = 100;
+    private float health = 100;
 
-    public void TakeDamage(int Damage)
+    public void TakeDamage(float Damage)
     {
+        Debug.Log("Ala ~ zombie");
         health -= Damage;
         if (health <= 0)
         {

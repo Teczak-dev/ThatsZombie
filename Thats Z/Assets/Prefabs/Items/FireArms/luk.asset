@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: luk
   m_EditorClassIdentifier: Assembly-CSharp::Firearm
-  name: Bow
+  name: Bow01
   description: The bow, a silent yet effective weapon, is perfect for eliminating
     zombies from a distance. With a durable string and precise sight, the bow allows
     players to attack from afar, minimizing the risk of detection by the undead.

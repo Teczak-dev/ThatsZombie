@@ -47,9 +47,11 @@ public class PlayerShooting : MonoBehaviour
             {
                 if (magAmmo > 0)
                 {
+                    Debug.Log("Strzelanie");
                     Strzel(); // Wywołaj funkcję strzelania
                     czasOstatniegoStrzalu = Time.time; // Zaktualizuj czas ostatniego strzału
                     magAmmo--;
+                    if(magAmmo == 0) Reload();
                 }
                 else
                 {
@@ -74,6 +76,7 @@ public class PlayerShooting : MonoBehaviour
     {
         // Stworzenie pocisku na pozycji firePoint
         GameObject pocisk = Instantiate(pociskPrefab, firePoint.position, firePoint.rotation);
+        pocisk.GetComponent<BulletLogic>().SetDamage(silaPocisku);
 
         // Dodaj siłę do pocisku
         Rigidbody rb = pocisk.GetComponent<Rigidbody>();

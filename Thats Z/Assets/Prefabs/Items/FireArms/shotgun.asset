@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: shotgun
   m_EditorClassIdentifier: Assembly-CSharp::Firearm
-  name: Shotgun
+  name: dubeltowka
   description: The shotgun, a powerhouse at close range, excels in combating zombie
     hordes. Its wide spread allows for dealing damage to multiple foes simultaneously.
     Safe for the user but potent in action, the shotgun becomes an indispensable
@@ -21,7 +21,7 @@ MonoBehaviour:
   itemID: 0
   price: 0
   damage: 70
-  fireRate: 3
+  fireRate: 1
   isShort: 0
   weaponType: Shotgun
   MagSize: 2
