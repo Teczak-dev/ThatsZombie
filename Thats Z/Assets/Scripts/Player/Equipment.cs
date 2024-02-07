@@ -44,7 +44,7 @@ public class Equipment : MonoBehaviour
                     for (int i = 0; i < PlayerWeapons.Length; i++)
                     {
                         PlayerWeapons[i].SetActive(false);
-                        if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[0].name)
+                        if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[0].itemName)
                         {
                             PlayerWeapons[i].SetActive(true);
                             PlayerShooting ps = PlayerWeapons[i].GetComponent<PlayerShooting>();
@@ -79,7 +79,7 @@ public class Equipment : MonoBehaviour
                     for (int i = 0; i < PlayerWeapons.Length; i++)
                     {
                         PlayerWeapons[i].SetActive(false);
-                        if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[1].name)
+                        if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[1].itemName)
                         {
                             PlayerWeapons[i].SetActive(true);
                             PlayerShooting ps = PlayerWeapons[i].GetComponent<PlayerShooting>();
@@ -115,7 +115,7 @@ public class Equipment : MonoBehaviour
                 for (int i = 0; i < PlayerWeapons.Length; i++)
                 {
                     PlayerWeapons[i].SetActive(false);
-                    if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[2].name)
+                    if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[2].itemName)
                     {
                         PlayerWeapons[i].SetActive(true);
                         PlayerShooting ps = PlayerWeapons[i].GetComponent<PlayerShooting>();
@@ -164,6 +164,11 @@ public class Equipment : MonoBehaviour
         {
             RemoveWeapon(index);
         }
+        
+        Debug.Log(Weapons[0] != pustySlot);
+        Debug.Log(Weapons[1] != pustySlot);
+        Debug.Log(Weapons[2] != pustySlot);
+        
     }
 
     public void RemoveWeapon(int index)

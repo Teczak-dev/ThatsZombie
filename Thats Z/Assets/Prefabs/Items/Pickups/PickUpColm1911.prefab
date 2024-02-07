@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d95e76ede425f418c156460d3e81cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 95701984674c0ca4083cc754ff9e89d0, type: 2}
+  item: {fileID: 4933030319208326012, guid: ed302cc5e37d20246ace9e71711ca04e, type: 3}
   ISys: {fileID: 0}
   PlayerController: {fileID: 0}
 --- !u!65 &6296444524464862480

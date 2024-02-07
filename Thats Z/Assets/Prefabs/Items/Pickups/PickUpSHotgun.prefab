@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d95e76ede425f418c156460d3e81cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: dc31b084de244a44e87ec3a97b3df276, type: 2}
+  item: {fileID: 657314073341772965, guid: bba415fb566cd4a41b244e80d996e69c, type: 3}
   ISys: {fileID: 0}
   PlayerController: {fileID: 0}
 --- !u!65 &1547292633862809288

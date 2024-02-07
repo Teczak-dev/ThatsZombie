@@ -82,7 +82,7 @@ public class PlayerShooting : MonoBehaviour
         Rigidbody rb = pocisk.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.AddForce(firePoint.forward * silaPocisku, ForceMode.Impulse);
+            rb.AddForce(firePoint.forward * 5, ForceMode.Impulse);
         }
         else
         {

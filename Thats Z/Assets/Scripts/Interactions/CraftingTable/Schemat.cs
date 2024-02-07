@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Schemat", menuName = "Schemat/New Schemat")]
-public class Schemat : ScriptableObject
+
+public class Schemat : MonoBehaviour
 {
     public new string name;
     public string description;
