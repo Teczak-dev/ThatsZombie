@@ -9,7 +9,8 @@ public class DoorSys : MonoBehaviour
     
     public GameObject Door;
     public Animator DoorAnim;
-    public string InterActionText = "Press E to open/close the door";
+    public string InterActionText1 = "Press E to open the door";
+    public string InterActionText2 = "Press E to close the door";
     public GameObject Player;
     private bool isOpen;
     private bool isInRange = false;
@@ -25,7 +26,9 @@ public class DoorSys : MonoBehaviour
     {
         if (isInRange)
         {
-            Player.GetComponent<PlayerController>().SetInterActionText(InterActionText);
+            if(!isOpen) Player.GetComponent<PlayerController>().SetInterActionText(InterActionText1);
+            else Player.GetComponent<PlayerController>().SetInterActionText(InterActionText2);
+            
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (!isOpen)

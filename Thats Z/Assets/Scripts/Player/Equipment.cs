@@ -13,6 +13,7 @@ public class Equipment : MonoBehaviour
     
     public Item[] FastSlots = new Item[4];
 
+    private bool canEqWeapon = true;
     private bool isWO1 = false;
     private bool isWO2 = false;
     private bool isWO3 = false;
@@ -35,8 +36,10 @@ public class Equipment : MonoBehaviour
 
     private void Update()
     {
-        #region Weap1
-        
+        if (canEqWeapon)
+        {
+            #region Weap1
+
             if (Input.GetKeyDown(KeyCode.Alpha1) && Weapons[0] != pustySlot)
             {
                 if (!isWO1)
@@ -48,7 +51,8 @@ public class Equipment : MonoBehaviour
                         {
                             PlayerWeapons[i].SetActive(true);
                             PlayerShooting ps = PlayerWeapons[i].GetComponent<PlayerShooting>();
-                            ps.changeWeapon(((Firearm)Weapons[0]).weaponType, ((Firearm)Weapons[0]).MagSize, ((Firearm)Weapons[0]).damage, ((Firearm)Weapons[0]).fireRate);
+                            ps.changeWeapon(((Firearm)Weapons[0]).weaponType, ((Firearm)Weapons[0]).MagSize,
+                                ((Firearm)Weapons[0]).damage, ((Firearm)Weapons[0]).fireRate);
                             isWO1 = true;
                             isWO2 = false;
                             isWO3 = false;
@@ -61,17 +65,18 @@ public class Equipment : MonoBehaviour
                     for (int i = 0; i < PlayerWeapons.Length; i++)
                     {
                         PlayerWeapons[i].SetActive(false);
-                        
+
                     }
 
                     isWO1 = false;
                     WeaponUI.SetActive(false);
                 }
             }
-        #endregion Weap1
 
-        #region Weap2
-        
+            #endregion Weap1
+
+            #region Weap2
+
             if (Input.GetKeyDown(KeyCode.Alpha2) && Weapons[1] != pustySlot)
             {
                 if (!isWO2)
@@ -83,9 +88,10 @@ public class Equipment : MonoBehaviour
                         {
                             PlayerWeapons[i].SetActive(true);
                             PlayerShooting ps = PlayerWeapons[i].GetComponent<PlayerShooting>();
-                            ps.changeWeapon(((Firearm)Weapons[1]).weaponType, ((Firearm)Weapons[1]).MagSize, ((Firearm)Weapons[1]).damage, ((Firearm)Weapons[1]).fireRate);
+                            ps.changeWeapon(((Firearm)Weapons[1]).weaponType, ((Firearm)Weapons[1]).MagSize,
+                                ((Firearm)Weapons[1]).damage, ((Firearm)Weapons[1]).fireRate);
                             isWO2 = true;
-                            
+
                             isWO1 = false;
                             isWO3 = false;
                             WeaponUI.SetActive(true);
@@ -97,51 +103,70 @@ public class Equipment : MonoBehaviour
                     for (int i = 0; i < PlayerWeapons.Length; i++)
                     {
                         PlayerWeapons[i].SetActive(false);
-                        
+
                     }
 
                     isWO2 = false;
                     WeaponUI.SetActive(false);
                 }
             }
-        #endregion Weap2
-        
-        #region Weap3
-        
-        if (Input.GetKeyDown(KeyCode.Alpha3) && Weapons[2] != pustySlot)
-        {
-            if (!isWO3)
+
+            #endregion Weap2
+
+            #region Weap3
+
+            if (Input.GetKeyDown(KeyCode.Alpha3) && Weapons[2] != pustySlot)
             {
-                for (int i = 0; i < PlayerWeapons.Length; i++)
+                if (!isWO3)
                 {
-                    PlayerWeapons[i].SetActive(false);
-                    if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[2].itemName)
+                    for (int i = 0; i < PlayerWeapons.Length; i++)
                     {
-                        PlayerWeapons[i].SetActive(true);
-                        PlayerShooting ps = PlayerWeapons[i].GetComponent<PlayerShooting>();
-                        ps.changeWeapon(((Firearm)Weapons[2]).weaponType, ((Firearm)Weapons[2]).MagSize, ((Firearm)Weapons[2]).damage, ((Firearm)Weapons[2]).fireRate);
-                        isWO3 = true;
-                        
-                        isWO2 = false;
-                        isWO1 = false;
-                        WeaponUI.SetActive(true);
+                        PlayerWeapons[i].SetActive(false);
+                        if (PlayerWeapons[i].GetComponent<PlayerShooting>().Wname == Weapons[2].itemName)
+                        {
+                            PlayerWeapons[i].SetActive(true);
+                            PlayerShooting ps = PlayerWeapons[i].GetComponent<PlayerShooting>();
+                            ps.changeWeapon(((Firearm)Weapons[2]).weaponType, ((Firearm)Weapons[2]).MagSize,
+                                ((Firearm)Weapons[2]).damage, ((Firearm)Weapons[2]).fireRate);
+                            isWO3 = true;
+
+                            isWO2 = false;
+                            isWO1 = false;
+                            WeaponUI.SetActive(true);
+                        }
                     }
                 }
-            }
-            else
-            {
-                for (int i = 0; i < PlayerWeapons.Length; i++)
+                else
                 {
-                    PlayerWeapons[i].SetActive(false);
-                        
-                }
+                    for (int i = 0; i < PlayerWeapons.Length; i++)
+                    {
+                        PlayerWeapons[i].SetActive(false);
 
-                isWO3 = false;
-                WeaponUI.SetActive(false);
+                    }
+
+                    isWO3 = false;
+                    WeaponUI.SetActive(false);
+                }
             }
+
+            #endregion Weap3
+
         }
-        #endregion Weap3
-        
+
+        else
+        {
+            for (int i = 0; i < PlayerWeapons.Length; i++)
+            {
+                PlayerWeapons[i].SetActive(false);
+
+            }
+
+            isWO1 = false;
+            isWO2 = false;
+            isWO3 = false;
+            WeaponUI.SetActive(false);
+        }
+
     }
 
     public void SetWeapon(int Windex, Item item,int index)
@@ -182,6 +207,10 @@ public class Equipment : MonoBehaviour
             }
         }
     }
-    
+
+    public void ChangeCanEQWeapon(bool statement)
+    {
+        canEqWeapon = statement;
+    }
     
 }
