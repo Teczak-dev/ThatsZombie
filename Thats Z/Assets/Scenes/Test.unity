@@ -2839,7 +2839,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 357476963}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2854,7 +2854,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357476962}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2863,7 +2863,7 @@ Transform:
   - {fileID: 1076623314}
   - {fileID: 270911175}
   - {fileID: 293728644}
-  m_Father: {fileID: 963194228}
+  m_Father: {fileID: 467236597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &367223253
 GameObject:
@@ -3425,7 +3425,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 357476963}
   m_Father: {fileID: 963194228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &467236598
@@ -4286,7 +4287,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -7138,7 +7139,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 467236597}
-  - {fileID: 357476963}
   m_Father: {fileID: 1650591522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &967000239
@@ -7264,6 +7264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1650591521}
+  InvSys: {fileID: 1791154103}
 --- !u!1 &974884707
 GameObject:
   m_ObjectHideFlags: 0
@@ -8012,7 +8013,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOU DIE
+  m_Text: YOU DIED
 --- !u!222 &1066152493
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15948,6 +15949,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickUpAK47
       objectReference: {fileID: 0}
+    - target: {fileID: 8390781788855828226, guid: b5b009ac0c3dc814f9ca13baccaf2bd8, type: 3}
+      propertyPath: m_Size.x
+      value: 2.2288384
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390781788855828226, guid: b5b009ac0c3dc814f9ca13baccaf2bd8, type: 3}
+      propertyPath: m_Size.z
+      value: 3.7747269
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390781788855828226, guid: b5b009ac0c3dc814f9ca13baccaf2bd8, type: 3}
+      propertyPath: m_Center.x
+      value: -0.041929007
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390781788855828226, guid: b5b009ac0c3dc814f9ca13baccaf2bd8, type: 3}
+      propertyPath: m_Center.y
+      value: 0.58230877
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390781788855828226, guid: b5b009ac0c3dc814f9ca13baccaf2bd8, type: 3}
+      propertyPath: m_Center.z
+      value: -0.07244873
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16147,6 +16168,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol
       objectReference: {fileID: 0}
+    - target: {fileID: 1785946153305915478, guid: 3ab911f2899d78341bdea6c1fa3c51eb, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16172,6 +16197,26 @@ PrefabInstance:
       propertyPath: PlayerController
       value: 
       objectReference: {fileID: 1650591523}
+    - target: {fileID: 6296444524464862480, guid: da69881fa47daa147b48ecd4f99d201b, type: 3}
+      propertyPath: m_Size.x
+      value: 2.66184
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296444524464862480, guid: da69881fa47daa147b48ecd4f99d201b, type: 3}
+      propertyPath: m_Size.z
+      value: 3.2398682
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296444524464862480, guid: da69881fa47daa147b48ecd4f99d201b, type: 3}
+      propertyPath: m_Center.x
+      value: 0.040808916
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296444524464862480, guid: da69881fa47daa147b48ecd4f99d201b, type: 3}
+      propertyPath: m_Center.y
+      value: 0.58230877
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296444524464862480, guid: da69881fa47daa147b48ecd4f99d201b, type: 3}
+      propertyPath: m_Center.z
+      value: 0.19498062
+      objectReference: {fileID: 0}
     - target: {fileID: 8011750880718765534, guid: da69881fa47daa147b48ecd4f99d201b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.0639124
@@ -16228,6 +16273,10 @@ PrefabInstance:
     - target: {fileID: 7177879482751744094, guid: 77b973706ef640f44aa1a92476ef61bc, type: 3}
       propertyPath: m_Name
       value: shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 7177879482751744094, guid: 77b973706ef640f44aa1a92476ef61bc, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7554546416107594468, guid: 77b973706ef640f44aa1a92476ef61bc, type: 3}
       propertyPath: m_LocalScale.x
@@ -16367,6 +16416,26 @@ PrefabInstance:
       propertyPath: PlayerController
       value: 
       objectReference: {fileID: 1650591523}
+    - target: {fileID: 1547292633862809288, guid: 3ac06ca26b2b5a146b08df68e9e52bfe, type: 3}
+      propertyPath: m_Size.x
+      value: 2.4690347
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547292633862809288, guid: 3ac06ca26b2b5a146b08df68e9e52bfe, type: 3}
+      propertyPath: m_Size.z
+      value: 4.345173
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547292633862809288, guid: 3ac06ca26b2b5a146b08df68e9e52bfe, type: 3}
+      propertyPath: m_Center.x
+      value: -0.18859786
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547292633862809288, guid: 3ac06ca26b2b5a146b08df68e9e52bfe, type: 3}
+      propertyPath: m_Center.y
+      value: 0.58230877
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547292633862809288, guid: 3ac06ca26b2b5a146b08df68e9e52bfe, type: 3}
+      propertyPath: m_Center.z
+      value: -0.35767174
+      objectReference: {fileID: 0}
     - target: {fileID: 3072299423227677422, guid: 3ac06ca26b2b5a146b08df68e9e52bfe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.11
@@ -16467,6 +16536,10 @@ PrefabInstance:
     - target: {fileID: 4475475934325992064, guid: bc5a4af4b10244f4c8f261a8d76246a3, type: 3}
       propertyPath: m_Name
       value: Akbody
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475475934325992064, guid: bc5a4af4b10244f4c8f261a8d76246a3, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

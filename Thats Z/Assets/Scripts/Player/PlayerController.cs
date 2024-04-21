@@ -227,8 +227,8 @@ public class PlayerController : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     public void SetInterActionText(string txt)
     {
-        Debug.Log(txt);
         InterActionTxt.text = txt;
+        Debug.Log(InterActionTxt.text);
     }
     
 

@@ -60,7 +60,7 @@ public class DoorSys : MonoBehaviour
         if (other.gameObject.tag == Player.tag)
         {
             isInRange = false;
-            Player.GetComponent<PlayerController>().SetInterActionText(" ");
+            Player.GetComponent<PlayerController>().SetInterActionText("");
         }
     }
 }

@@ -16,8 +16,8 @@ public class PickUpItem : MonoBehaviour
     {
         if (isInRange)
         {
-            
-            PlayerController.SetInterActionText("Press E to pickup "+item.name);
+            string text = "Press E to pickup " + item.name;
+            PlayerController.SetInterActionText(text);
              if (Input.GetKey(KeyCode.E))
              {
                  if (ISys.AddToInv(item))
