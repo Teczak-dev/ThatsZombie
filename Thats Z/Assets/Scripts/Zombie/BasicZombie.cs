@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class BasicZombie : MonoBehaviour
 {
+    public Animator ar;
     public float wanderRadius = 10f;
     public float wanderTimer = 5f;
     public float chaseDistance = 20f;
@@ -36,7 +37,9 @@ public class BasicZombie : MonoBehaviour
 
             if (distance <= attackDistance && !isAttacking)
             {
+                ar.SetBool("CanAttack", true);
                 Attack();
+                ar.SetBool("CanAttack", false);
                 agent.isStopped = true;
             }
             else if (distance <= chaseDistance)
@@ -57,9 +60,11 @@ public class BasicZombie : MonoBehaviour
         }
         else
         {
+            ar.SetBool("CanWalk",true);
             isChasing = false;
             isAttacking = false;
             FindRandomWanderPoint();
+            ar.SetBool("CanWalk",false);
         }
 
         if (isChasing)
@@ -80,6 +85,7 @@ public class BasicZombie : MonoBehaviour
 
     void FindRandomWanderPoint()
     {
+        
         Vector3 randomDirection = Random.insideUnitSphere * wanderRadius;
         randomDirection += transform.position;
         NavMeshHit hit;
@@ -92,6 +98,9 @@ public class BasicZombie : MonoBehaviour
     {
         if (Time.time - lastAttackTime >= attackCooldown)
         {
+
+            
+            
             // Wykonaj obrażenia na graczu
             PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
             if (playerHealth != null)

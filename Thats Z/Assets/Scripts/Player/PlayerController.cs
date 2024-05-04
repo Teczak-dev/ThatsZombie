@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,12 +32,18 @@ public class PlayerController : MonoBehaviour
     public Camera PlayerCamera;
     public float MouseSensitivity = 90f;
     public float PlayerSpeed = 3f;
-    public float jumpForce = 2f;
+    public float jumpForce = 5f;
 
     private bool isJumping = false;
     private bool isWalking = false;
     public bool isHide = false;
+    private bool isInCarRange = false;
+    //car spec
+    public CarSystem carS;
+    private int CarId;
+    
     private bool canCrouch = true;
+    
     private float rotationOnX;
     private Vector3 prevoiusMousePosition;
     private Vector3 prevoiusPlayerPosition;
@@ -173,28 +180,43 @@ public class PlayerController : MonoBehaviour
        
         #endregion KeyBind
 
+        if (isInCarRange)
+        {
+            SetInterActionText("Press E to Enter the car");
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                carS.InteractionWithCar(CarId);
+                
+            }
+        }
+        
     }
 
     #region Player Movement Function
     private void playerMoveForward()
     {
-        transform.position += transform.forward * Time.deltaTime * PlayerSpeed;
+        Vector3 movement = transform.forward * Time.deltaTime * PlayerSpeed;
+        PlayerRB.MovePosition(PlayerRB.position + movement);
     }
     private void playerMoveBackward()
     {
-        transform.position -= transform.forward * Time.deltaTime * PlayerSpeed;
+        Vector3 movement = -transform.forward * Time.deltaTime * PlayerSpeed;
+        PlayerRB.MovePosition(PlayerRB.position + movement);
     }
     private void playerMoveRight()
     {
-        transform.Translate(Vector3.right * Time.deltaTime * PlayerSpeed);
+        Vector3 movement = transform.right * Time.deltaTime * PlayerSpeed;
+        PlayerRB.MovePosition(PlayerRB.position + movement);
     }
     private void playerMoveLeft()
     {
-        transform.Translate(-Vector3.right * Time.deltaTime * PlayerSpeed);
+        Vector3 movement = -transform.right * Time.deltaTime * PlayerSpeed;
+        PlayerRB.MovePosition(PlayerRB.position + movement);
     }
     private void playerJumped()
     {
-        PlayerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        Vector3 jumpVelocity = new Vector3(PlayerRB.velocity.x, jumpForce, PlayerRB.velocity.z);
+        PlayerRB.velocity = jumpVelocity;
     }
 
     private void rotateCamera()
@@ -222,6 +244,25 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Car")
+        {
+            isInCarRange = true;
+            CarId = other.GetComponentInParent<CarController>().CarId;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Car")
+        {
+            isInCarRange = false;
+            SetInterActionText("");
+        }
+    }
+
     #endregion Triggers And Collisions
 
     // ReSharper disable Unity.PerformanceAnalysis
