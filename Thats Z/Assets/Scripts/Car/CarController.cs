@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    private bool isPause = false;
+    public PauseSys ps;
     [Header("Car System")]
     public int CarId;
     public GameObject Player;
@@ -33,12 +35,25 @@ public class CarController : MonoBehaviour
     
         private void FixedUpdate()
         {
-            
-            GetInput();
-            HandleMotor();
-            HandleSteering();
-            UpdateWheels();
-            
+            if (Input.GetKeyDown(KeyCode.Escape) && !isPause)
+            {
+                ps.Pause(1);
+                isPause = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && isPause)
+            {
+                ps.Resume();
+                isPause = false;
+            }
+
+            if (!isPause)
+            {
+                GetInput();
+                HandleMotor();
+                HandleSteering();
+                UpdateWheels();
+            }
+
         }
     
         private void GetInput() {

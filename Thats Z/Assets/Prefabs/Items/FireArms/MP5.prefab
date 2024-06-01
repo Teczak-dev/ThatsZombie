@@ -49,7 +49,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   itemID: 1
   price: 200
-  damage: 15
+  damage: 3
   fireRate: 0.1
   isShort: 0
   weaponType: Smg

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 
+    public PauseSys ps;
     public GameObject Body;
     public GameObject Camera;
     public HungrySys hs;
@@ -25,13 +26,14 @@ public class PlayerController : MonoBehaviour
     #endregion Sprinting
 
     public bool isPause;
+    private Animator playerAnim;
 
     #region Move Values
     [Header("Other")]
     public Rigidbody PlayerRB;
     public Camera PlayerCamera;
     public float MouseSensitivity = 90f;
-    public float PlayerSpeed = 3f;
+    public float PlayerSpeed = 1f;
     public float jumpForce = 5f;
 
     private bool isJumping = false;
@@ -59,137 +61,168 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1f;
-       
-       
+        playerAnim = GetComponent<Animator>();
+
 
     }
 
     void Update()
     {
 
-        #region KeyBind
-
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPause)
         {
-            gameObject.GetComponent<PlayerUIManager>().ChangeInventoryView();
+            ps.Pause(0);
+            isPause = true;
         }
-
-        if (canCrouch)
+        else if (Input.GetKeyDown(KeyCode.Escape) && isPause)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-                Camera.transform.position = new Vector3(Camera.transform.position.x, 1.3f, Camera.transform.position.z);
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                Body.transform.localScale = new Vector3(1f, 0.5f, 1f);
-                PlayerSpeed = PlayerCrounchSpeed;
-                canSprint = false;
+            ps.Resume();
+            isPause = false;
+        }
+        
 
+        if (!isPause)
+        {
+            #region KeyBind
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                gameObject.GetComponent<PlayerUIManager>().ChangeInventoryView();
+            }
+
+            if (canCrouch)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftControl))
+                    Camera.transform.position =
+                        new Vector3(Camera.transform.position.x, 1.3f, Camera.transform.position.z);
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    Body.transform.localScale = new Vector3(1f, 0.5f, 1f);
+                    PlayerSpeed = PlayerCrounchSpeed;
+                    canSprint = false;
+
+                }
+                else
+                {
+                    Body.transform.localScale = new Vector3(1f, 1f, 1f);
+                    PlayerSpeed = PlayerWalkingSpeed;
+                    canSprint = true;
+                }
+
+                if (Input.GetKeyUp(KeyCode.LeftControl))
+                    Camera.transform.position =
+                        new Vector3(Camera.transform.position.x, 1.2f, Camera.transform.position.z);
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift) && isWalking && canSprint)
+            {
+                if (sprintCount > 0)
+                {
+                    //PlayerAnimator.SetBool("isSprint", true);
+                    SprintSlider.gameObject.SetActive(true);
+                    sprintCount -= sprintMinus * 1.5f;
+                    SprintSlider.value = sprintCount;
+                    PlayerSpeed = PlayerSprintSpeed;
+                }
+                else
+                {
+                    PlayerSpeed = PlayerWalkingSpeed;
+                    //PlayerAnimator.SetBool("isSprint", false);
+                    SprintSlider.gameObject.SetActive(false);
+                }
             }
             else
             {
-                Body.transform.localScale = new Vector3(1f, 1f, 1f);
-                PlayerSpeed = PlayerWalkingSpeed;
-                canSprint = true;
-            }
-            if (Input.GetKeyUp(KeyCode.LeftControl))
-                Camera.transform.position = new Vector3(Camera.transform.position.x, 1.2f, Camera.transform.position.z);
-        }
-
-        if(Input.GetKey(KeyCode.LeftShift) && isWalking && canSprint)
-        {
-            if (sprintCount > 0)
-            {
-                //PlayerAnimator.SetBool("isSprint", true);
-                SprintSlider.gameObject.SetActive(true);
-                sprintCount -= sprintMinus * 1.5f;
-                SprintSlider.value = sprintCount;
-                PlayerSpeed = PlayerSprintSpeed;
-            }
-            else
-            {
-                PlayerSpeed = PlayerWalkingSpeed;
                 //PlayerAnimator.SetBool("isSprint", false);
-                SprintSlider.gameObject.SetActive(false);
+                sprintCount += sprintMinus * SRS;
+                SprintSlider.value = sprintCount;
+                if (sprintCount < 5000)
+                {
+                    SprintSlider.gameObject.SetActive(true);
+                    hs.RemoveHungry(1);
+                }
+                else
+                {
+                    SprintSlider.gameObject.SetActive(false);
+                }
+
             }
-        }
-        else
-        {
-            //PlayerAnimator.SetBool("isSprint", false);
-            sprintCount += sprintMinus * SRS;
-            SprintSlider.value = sprintCount;
-            if (sprintCount < 5000)
+
+            if (Input.GetKey(KeyCode.W))
             {
-                SprintSlider.gameObject.SetActive(true);
-                hs.RemoveHungry(1);
+                playerMoveForward();
+                playerAnim.SetBool("MoveF", true);
+                isWalking = true;
+            }
+            else playerAnim.SetBool("MoveF", false);
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                playerMoveBackward();
+                playerAnim.SetBool("MoveB", true);
+                isWalking = true;
+            }
+            else playerAnim.SetBool("MoveB", false);
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                playerMoveRight();
+                isWalking = true;
+                playerAnim.SetBool("MoveR", true);
+            }
+            else playerAnim.SetBool("MoveR", false);
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                playerMoveLeft();
+                isWalking = true;
+                playerAnim.SetBool("MoveL", true);
+            }
+            else playerAnim.SetBool("MoveL", false);
+
+            if (Body.transform.localScale.y > 0.5f)
+            {
+                if (Input.GetKey(KeyCode.Space) && !isJumping)
+                {
+
+                    playerJumped();
+                    isJumping = true;
+                    canCrouch = false;
+                }
+            }
+
+            if (Input.mousePosition != prevoiusMousePosition)
+            {
+                rotateCamera();
+            }
+
+            if (PlayerRB.transform.position == prevoiusPlayerPosition)
+            {
+                isWalking = false;
+                playerAnim.SetBool("isMove", false);
+                //PlayerAnimator.SetBool("isWalk", false);
             }
             else
             {
-                SprintSlider.gameObject.SetActive(false);
+                isWalking = true;
+
+                playerAnim.SetBool("isMove", true);
+                //PlayerAnimator.SetBool("isWalk", true);
             }
 
-        }
-        
-        if (Input.GetKey(KeyCode.W))
-        {
-            playerMoveForward();
-            isWalking = true;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            playerMoveBackward();
-            isWalking = true;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            playerMoveRight();
-            isWalking = true;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            playerMoveLeft();
-            isWalking = true;
-        }
+            prevoiusPlayerPosition = PlayerRB.transform.position;
 
-        if (Body.transform.localScale.y > 0.5f)
-        {
-            if (Input.GetKey(KeyCode.Space) && !isJumping)
+            #endregion KeyBind
+
+            if (isInCarRange)
             {
+                SetInterActionText("Press E to Enter the car");
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    carS.InteractionWithCar(CarId);
 
-                playerJumped();
-                isJumping = true;
-                canCrouch = false;
+                }
             }
         }
-
-        if (Input.mousePosition != prevoiusMousePosition)
-        {
-            rotateCamera();
-        }
-
-        if (PlayerRB.transform.position == prevoiusPlayerPosition)
-        {
-            isWalking = false;
-            //PlayerAnimator.SetBool("isWalk", false);
-        }
-        else
-        {
-            isWalking = true;
-            //PlayerAnimator.SetBool("isWalk", true);
-        }
-        prevoiusPlayerPosition = PlayerRB.transform.position;
-       
-        #endregion KeyBind
-
-        if (isInCarRange)
-        {
-            SetInterActionText("Press E to Enter the car");
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                carS.InteractionWithCar(CarId);
-                
-            }
-        }
-        
     }
 
     #region Player Movement Function

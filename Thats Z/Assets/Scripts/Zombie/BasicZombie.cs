@@ -12,7 +12,9 @@ public class BasicZombie : MonoBehaviour
     public float attackDistance = 2f;
     public int damage = 10;
     public float attackCooldown = 2f;
-
+    public float attackMoveSpeed = 0.01f;
+    private Transform positionZ;
+    
     public Transform target;
     private NavMeshAgent agent;
     private float timer;
@@ -25,11 +27,11 @@ public class BasicZombie : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         timer = wanderTimer;
         FindRandomWanderPoint();
+        ar.SetBool("IsWalking", true);
     }
 
     void Update()
     {
-        
         
         if (target != null)
         {
@@ -37,10 +39,7 @@ public class BasicZombie : MonoBehaviour
 
             if (distance <= attackDistance && !isAttacking)
             {
-                ar.SetBool("CanAttack", true);
                 Attack();
-                ar.SetBool("CanAttack", false);
-                agent.isStopped = true;
             }
             else if (distance <= chaseDistance)
             {
@@ -48,23 +47,24 @@ public class BasicZombie : MonoBehaviour
                 isAttacking = false;
                 agent.isStopped = false;
                 agent.SetDestination(target.position);
-                
+                ar.SetBool("IsAttacking", false);
             }
             else if (isChasing)
             {
                 isChasing = false;
                 isAttacking = false;
                 agent.isStopped = false;
+                agent.speed = agent.speed;
                 FindRandomWanderPoint();
+                ar.SetBool("IsAttacking", false);
             }
         }
         else
         {
-            ar.SetBool("CanWalk",true);
             isChasing = false;
             isAttacking = false;
+            agent.speed = agent.speed;
             FindRandomWanderPoint();
-            ar.SetBool("CanWalk",false);
         }
 
         if (isChasing)
@@ -81,11 +81,12 @@ public class BasicZombie : MonoBehaviour
                 timer = 0;
             }
         }
+        
+        
     }
 
     void FindRandomWanderPoint()
     {
-        
         Vector3 randomDirection = Random.insideUnitSphere * wanderRadius;
         randomDirection += transform.position;
         NavMeshHit hit;
@@ -98,22 +99,27 @@ public class BasicZombie : MonoBehaviour
     {
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-
-            
-            
+            ar.SetBool("IsAttacking", true);
             // Wykonaj obrażenia na graczu
             PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
             }
-            
+
             lastAttackTime = Time.time;
             isAttacking = true;
-            
-            
-            
+            agent.isStopped = true;
+            agent.speed = attackMoveSpeed;
+            StartCoroutine(ResumeChasingAfterDelay(attackCooldown));
         }
+    }
+
+    IEnumerator ResumeChasingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isAttacking = false;
+        agent.isStopped = false;
     }
 
     public void SetTarget(Transform newTarget)

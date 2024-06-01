@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Equipment : MonoBehaviour
 {
+    public Animator playerAnim;
     public GameObject WeaponUI;
     public Item pustySlot;
     public GameObject[] PlayerWeapons;
@@ -59,6 +60,7 @@ public class Equipment : MonoBehaviour
                             WeaponUI.SetActive(true);
                         }
                     }
+                    playerAnim.SetBool("isGun",true);
                 }
                 else
                 {
@@ -70,6 +72,7 @@ public class Equipment : MonoBehaviour
 
                     isWO1 = false;
                     WeaponUI.SetActive(false);
+                    playerAnim.SetBool("isGun",false);
                 }
             }
 
@@ -97,6 +100,7 @@ public class Equipment : MonoBehaviour
                             WeaponUI.SetActive(true);
                         }
                     }
+                    playerAnim.SetBool("isGun",true);
                 }
                 else
                 {
@@ -108,6 +112,7 @@ public class Equipment : MonoBehaviour
 
                     isWO2 = false;
                     WeaponUI.SetActive(false);
+                    playerAnim.SetBool("isGun",false);
                 }
             }
 
@@ -135,6 +140,7 @@ public class Equipment : MonoBehaviour
                             WeaponUI.SetActive(true);
                         }
                     }
+                    playerAnim.SetBool("isGun",true);
                 }
                 else
                 {
@@ -146,6 +152,7 @@ public class Equipment : MonoBehaviour
 
                     isWO3 = false;
                     WeaponUI.SetActive(false);
+                    playerAnim.SetBool("isGun",false);
                 }
             }
 
