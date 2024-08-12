@@ -150,7 +150,7 @@ public class InventorySystem : MonoBehaviour
             isInv = false;
             if (Menu == "Main")
             {
-
+                WeaponPanel.SetActive(false);
                 BackPackMatPanel.SetActive(false);
                 EQPanel.SetActive(true);
                 isInv = true;

@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && !isPause)
         {
-            ps.Pause(0);
+            if (!gameObject.GetComponent<PlayerUIManager>().isInv) ps.Pause(0);    
+            else ps.Pause(3);
             isPause = true;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && isPause)

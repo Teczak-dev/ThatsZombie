@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: f15c336556dd74f40aaca655f7767970, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.99652725, g: 0.8711986, b: 0.7254972, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23155,6 +23155,7 @@ MonoBehaviour:
   UIPanels:
   - {fileID: 156582586}
   - {fileID: 1385952016}
+  - {fileID: 2046137919}
   PausePanel: {fileID: 1666981248}
   PC: {fileID: 1650591523}
 --- !u!4 &1495103958 stripped
@@ -30611,6 +30612,7 @@ MonoBehaviour:
   UIPanel: {fileID: 156582586}
   InvPanel: {fileID: 2046137919}
   Isys: {fileID: 1791154104}
+  isInv: 0
   DeathPanel: {fileID: 184808758}
 --- !u!114 &1650591527
 MonoBehaviour:
@@ -30782,7 +30784,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691367410}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30795,7 +30797,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -237.3043, y: -213.8087}
+  m_SizeDelta: {x: -237.3043, y: -213.80872}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691367412
 MonoBehaviour:

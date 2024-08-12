@@ -20,7 +20,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public InventorySystem Isys;
     
-    private bool isInv = false;
+    public bool isInv = false;
     [Header("DEATH")] 
     public GameObject DeathPanel;
     
@@ -36,18 +36,19 @@ public class PlayerUIManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0f;
             Isys.ChangeEQM();
-            pc.isPause = true;
+            //pc.isPause = true;
             isInv = true;
         }
         else
         {
             UIPanel.SetActive(true);
+            Isys.ChangeEQM();
             InvPanel.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1f;
             isInv = false;
-            pc.isPause = false;
+            //pc.isPause = false;
         }
     }
 
