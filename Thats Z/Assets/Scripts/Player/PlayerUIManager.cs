@@ -21,6 +21,8 @@ public class PlayerUIManager : MonoBehaviour
     public InventorySystem Isys;
     
     public bool isInv = false;
+    [Header("Map")] public GameObject MapUI;
+    
     [Header("DEATH")] 
     public GameObject DeathPanel;
     

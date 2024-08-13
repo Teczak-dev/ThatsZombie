@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 
+    public MapController MapContr;
+    public GameObject UIPlayer;
     public PauseSys ps;
     public GameObject Body;
     public GameObject Camera;
@@ -69,10 +71,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !isPause)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPause && !MapContr.isMap)
         {
-            if (!gameObject.GetComponent<PlayerUIManager>().isInv) ps.Pause(0);    
-            else ps.Pause(3);
+            if (gameObject.GetComponent<PlayerUIManager>().isInv) ps.Pause(3);    
+            else ps.Pause(0);
             isPause = true;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && isPause)
@@ -88,6 +90,11 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.I))
             {
                 gameObject.GetComponent<PlayerUIManager>().ChangeInventoryView();
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                MapContr.setMap();
             }
 
             if (canCrouch)

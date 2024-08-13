@@ -11,6 +11,7 @@ public class WakeUpCutScene : MonoBehaviour
     public GameObject AnimPlayerBody;
     public PlayableDirector playerAnim;
     public SubtitlesSys Sub;
+    public GameObject PlaayerUI;
     
     
     // Start is called before the first frame update
@@ -27,6 +28,7 @@ public class WakeUpCutScene : MonoBehaviour
         yield return new WaitForSeconds(11f);
         AnimPlayerBody.SetActive(false);
         Player.SetActive(true);
+        PlaayerUI.SetActive(true);
         Sub.SetSubtitle("I must survive ...",5f);
         yield return new WaitForSeconds(5f);
         Destroy(this.gameObject);
