@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarController : MonoBehaviour
 {
     private bool isPause = false;
     public PauseSys ps;
+    public Slider PaliwoSlider;
+    private int paliwo = 10000;
+    private int maxPaliwo = 10000;
     [Header("Car System")]
     public int CarId;
     public GameObject Player;
@@ -46,7 +50,7 @@ public class CarController : MonoBehaviour
                 isPause = false;
             }
 
-            if (!isPause)
+            if (!isPause && paliwo>0)
             {
                 GetInput();
                 HandleMotor();
@@ -106,10 +110,11 @@ public class CarController : MonoBehaviour
 
         private void Update()
         {
-            lastPosition = transform.position;
+            
             if (transform.position != lastPosition)
             {
-                //Usuwanie Paliwa
+                paliwo -= 1;
+                PaliwoSlider.value = paliwo;
             }
             if (Input.GetKeyDown(KeyCode.E) && isPlayerIn)
             {
@@ -121,6 +126,7 @@ public class CarController : MonoBehaviour
             {
                 Player.transform.position = transform.position;
             }
+            lastPosition = transform.position;
         }
 
         

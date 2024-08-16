@@ -99,12 +99,10 @@ public class PlayerController : MonoBehaviour
 
             if (canCrouch)
             {
-                if (Input.GetKeyDown(KeyCode.LeftControl))
-                    Camera.transform.position =
-                        new Vector3(Camera.transform.position.x, 1.3f, Camera.transform.position.z);
+                if (Input.GetKeyDown(KeyCode.LeftControl)) Camera.transform.position = new Vector3(Camera.transform.position.x, 1.3f, Camera.transform.position.z);
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    Body.transform.localScale = new Vector3(1f, 0.5f, 1f);
+                    Body.transform.localScale = new Vector3(1f, 0.7f, 1f);
                     PlayerSpeed = PlayerCrounchSpeed;
                     canSprint = false;
 
@@ -116,9 +114,7 @@ public class PlayerController : MonoBehaviour
                     canSprint = true;
                 }
 
-                if (Input.GetKeyUp(KeyCode.LeftControl))
-                    Camera.transform.position =
-                        new Vector3(Camera.transform.position.x, 1.2f, Camera.transform.position.z);
+                if (Input.GetKeyUp(KeyCode.LeftControl)) Camera.transform.position =  new Vector3(Camera.transform.position.x, 1.8f, Camera.transform.position.z);
             }
 
             if (Input.GetKey(KeyCode.LeftShift) && isWalking && canSprint)
