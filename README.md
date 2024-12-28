@@ -1,4 +1,4 @@
 # ThatsZombie
 Tha's Z is a zombie, first person survival game
 
-Za pracą odpowiada młode studio składające się z 4 osób, mam nadzieję że gra przypadnie wam do gustu :)
+Currently, the project is more of a demo of my work in game development. If you're interested in working on this project, let me know. It's an open-source project.
